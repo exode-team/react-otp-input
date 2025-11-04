@@ -155,8 +155,20 @@ const OTPInput = ({
     const otp = getOTPValue();
     if ([event.code, event.key].includes('Backspace')) {
       event.preventDefault();
-      changeCodeAtFocus('');
-      focusInput(activeInput - 1);
+
+      // If the current field is not empty, we clear it and stay on it.
+      if (otp[activeInput]) {
+        changeCodeAtFocus('');
+      } else {
+        // If the current field is empty, go to the previous one and clear it.
+        if (activeInput > 0) {
+          const prevIndex = activeInput - 1;
+          const prevOtp = getOTPValue();
+          prevOtp[prevIndex] = '';
+          handleOTPChange(prevOtp);
+          focusInput(prevIndex);
+        }
+      }
     } else if (event.code === 'Delete') {
       event.preventDefault();
       changeCodeAtFocus('');
@@ -194,7 +206,7 @@ const OTPInput = ({
 
   const changeCodeAtFocus = (value: string) => {
     const otp = getOTPValue();
-    otp[activeInput] = value[0];
+    otp[activeInput] = value.length > 0 ? value[0] : '';
     handleOTPChange(otp);
   };
 
@@ -234,7 +246,13 @@ const OTPInput = ({
 
   return (
     <div
-      style={Object.assign({ display: 'flex', alignItems: 'center' }, isStyleObject(containerStyle) && containerStyle)}
+      style={Object.assign(
+        {
+          display: 'flex',
+          alignItems: 'center',
+        },
+        isStyleObject(containerStyle) && containerStyle
+      )}
       className={typeof containerStyle === 'string' ? containerStyle : undefined}
       onPaste={onPaste}
     >
