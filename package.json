@@ -10,7 +10,8 @@
     "lint": "eslint 'src/**/*.{js,jsx}' --quiet",
     "lint:fix": "eslint 'src/**/*.{js,jsx}' --fix",
     "prepublishOnly": "rm -rf dist && npm run build",
-    "example:build": "cd example && yarn && yarn build"
+    "example:build": "cd example && yarn && yarn build",
+    "npm:publish": "npm run prepublishOnly && npm publish"
   },
   "keywords": [
     "otp",
