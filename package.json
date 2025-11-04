@@ -1,5 +1,5 @@
 {
-  "name": "@exode-team/otp-input",
+  "name": "@exode-team/react-otp-input",
   "version": "1.0.0",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
